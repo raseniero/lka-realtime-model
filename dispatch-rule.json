@@ -1,0 +1,14 @@
+{
+    "name": "MKIA dispatch-rule",
+    "trunk_ids": ["ST_m5BaQzYpwjj4"],
+    "rule": {
+        "dispatchRuleIndividual": {
+            "roomPrefix": "call-"
+        }
+    },
+    "roomConfig": {
+        "agents": [{
+            "agentName": "my-telephony-agent"
+        }]
+    }
+}
