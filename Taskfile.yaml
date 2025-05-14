@@ -1,0 +1,49 @@
+version: '3'
+
+vars:
+  # Default image name and tag
+  IMAGE_NAME: "livekit-inbound-caller-agent"
+  IMAGE_TAG: "latest"
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+    desc: Show available tasks
+
+  build:
+    cmds:
+      - docker build -t "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}" .
+    desc: Build the Docker image
+
+  build-no-cache:
+    cmds:
+      - docker build --no-cache -t "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}" .
+    desc: Build the Docker image without using cache
+
+  push:
+    cmds:
+      - docker push "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"
+    desc: Push the Docker image to the registry
+
+  run:
+    cmds:
+      - docker run --rm -it "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"
+    desc: Run the Docker container interactively
+
+  run-env:
+    cmds:
+      - docker run --rm -it --env-file .env.local "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"
+    desc: Run the Docker container with environment variables from .env.local
+
+  clean:
+    cmds:
+      - docker rmi "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}" 2>/dev/null || true
+    desc: Remove the Docker image
+
+  # Helper tasks
+  list-images:
+    cmds:
+      - docker images "{{.IMAGE_NAME}}"
+    desc: List all Docker images for this project
